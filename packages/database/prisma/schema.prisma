@@ -1,0 +1,122 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Chapter {
+  id              Int         @id @default(autoincrement())
+  title           String
+  duration        String
+  subject         Course      @relation(fields: [course_id], references: [id])
+  course_id       Int
+  lessons         Lesson[]
+  user            User?       @relation(fields: [created_by], references: [id])
+  created_by      Int?
+  text_content_id Int?
+  text_content    TextContent? @relation(fields: [text_content_id], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id              Int          @id @default(autoincrement())
+  username        String       @unique
+  password        String
+  email           String       @unique
+  name            String?
+  role            Role         @relation(fields: [role_id], references: [id])
+  role_id         Int
+  subjects        Course[]
+  chapters        Chapter[]
+  lessons         Lesson[]
+  text_content_id Int?
+  text_content    TextContent? @relation(fields: [text_content_id], references: [id], onDelete: Cascade)
+  tokens          PasswordResetToken[]
+}
+
+model PasswordResetToken {
+  id         Int       @id @default(autoincrement())
+  userId     Int       @unique
+  user       User      @relation(fields: [userId], references: [id])
+  token      String    @unique
+  createdAt  DateTime  @default(now())
+  used       Boolean   @default(false)
+  expiresAt  DateTime  
+}
+
+model Role {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  users User[]
+}
+
+model Course {
+  id               Int         @id @default(autoincrement())
+  created_at       DateTime    @default(now())
+  title            String      @db.VarChar(255)
+  description      String
+  full_desrciption String      @db.LongText
+  icon             String      @db.VarChar(255)
+  color            String      @db.VarChar(255)
+  chapters         Chapter[]
+  category         Category    @relation(fields: [category_id], references: [id])
+  category_id      Int
+  user             User?       @relation(fields: [created_by], references: [id])
+  created_by       Int?
+  text_content_id  Int
+  text_content     TextContent @relation(fields: [text_content_id], references: [id], onDelete: Cascade)
+}
+
+model Lesson {
+  id              Int         @id @default(autoincrement())
+  title           String
+  slug            String      @unique
+  content         String
+  chapter         Chapter     @relation(fields: [chapter_id], references: [id])
+  chapter_id      Int
+  user            User?       @relation(fields: [created_by], references: [id])
+  created_by      Int?
+  text_content_id Int
+  text_content    TextContent @relation(fields: [text_content_id], references: [id], onDelete: Cascade)
+}
+
+model Category {
+  id              Int         @id @default(autoincrement())
+  name            String      @unique
+  subjects        Course[]
+  text_content_id Int
+  text_content    TextContent @relation(fields: [text_content_id], references: [id], onDelete: Cascade)
+}
+
+model Language {
+  id            Int           @id @default(autoincrement())
+  code          String        @unique
+  name          String
+  translations  Translation[]
+  text_contents TextContent[]
+}
+
+model TextContent {
+  id                Int           @id @default(autoincrement())
+  original_text     String
+  language_code     String
+  original_language Language      @relation(fields: [language_code], references: [code])
+  translations      Translation[]
+  categories        Category[]
+  lessons           Lesson[]
+  subjects          Course[]
+  users             User[]
+  chapters          Chapter[]
+}
+
+model Translation {
+  text_content_id Int
+  text_content    TextContent @relation(fields: [text_content_id], references: [id])
+  language_id     Int
+  language        Language    @relation(fields: [language_id], references: [id])
+  translation     String
+
+  @@id([text_content_id, language_id])
+}

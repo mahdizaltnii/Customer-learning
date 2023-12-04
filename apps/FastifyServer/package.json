@@ -1,0 +1,37 @@
+{
+  "name": "fastifyserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/server.js",
+  "scripts": {
+    "start": "node ./src/server",
+    "dev": "nodemon ./src/server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/autoload": "^5.7.1",
+    "@fastify/cors": "^8.3.0",
+    "@fastify/env": "^4.2.0",
+    "@fastify/jwt": "^7.2.0",
+    "@fastify/swagger": "^8.8.0",
+    "@fastify/swagger-ui": "^1.9.3",
+    "accept-language-parser": "^1.5.0",
+    "bcrypt": "^5.1.1",
+    "close-with-grace": "^1.2.0",
+    "crypto": "^1.0.1",
+    "database": "workspace:*",
+    "fastify": "^4.20.0",
+    "fastify-plugin": "^4.5.1",
+    "i18next": "^23.4.4",
+    "i18next-http-middleware": "^3.3.2",
+    "jsonwebtoken": "^9.0.1",
+    "nodemailer": "^6.9.4",
+    "pino-pretty": "^10.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "prettier": "3.0.0"
+  }
+}

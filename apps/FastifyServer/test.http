@@ -1,0 +1,52 @@
+### Get All sections
+
+GET   http://localhost:3000/api/course HTTP/1.1
+
+
+### Add a new secrions
+POST http://localhost:3000/api/subject/subject HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "New Section",
+"description":"maa"
+}
+
+### Add a new section
+PUT http://localhost:3000/api/section/3 HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "New Sections",
+  "video_url":"maa"
+}
+
+
+
+### Add a new subject
+POST http://localhost:3000/api/subject HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "المحاسبات",
+  "description": "قم بإدارة المحاسبة والشؤون المالية لعملك بدقة وفعالية، بما في ذلك إعداد التقارير المالية ومراقبة النفقات وإدارة الفواتير والمدفوعات "
+  
+}
+
+### Get All subjects
+
+GET  http://localhost:3000/api/subject/2 HTTP/1.1
+
+### affect subject to category 
+POST http://localhost:3000/api/subject/AffectSubjectToCategory/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "المحاسبات",
+  "description": "قم بإدارة المحاسبة والشؤون المالية لعملك بدقة وفعالية، بما في ذلك إعداد التقارير المالية ومراقبة النفقات وإدارة الفواتير والمدفوعات "
+  
+}
+
+### Get All sections
+
+GET  http://localhost:3000/subjects/1 HTTP/1.1
